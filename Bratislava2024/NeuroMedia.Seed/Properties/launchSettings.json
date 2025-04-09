@@ -1,0 +1,18 @@
+{
+  "profiles": {
+    "PIP.Seed": {
+      "commandName": "Project",
+      "commandLineArgs": "all -s",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      },
+      "distributionName": ""
+    }
+  }
+}

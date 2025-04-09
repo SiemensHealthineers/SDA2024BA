@@ -1,0 +1,25 @@
+Following fields to be found on patient's profile:
+- First name:
+- Surname:
+- Sex:
+- Date of birth (Automatic age calculation):
+- Diagnosis:
+- Year of diagnosis (automatic calculation of the duration of the disease):
+- Email:
+- Phone:
+- The highest education achieved: (dropdown with options)
+  - Complete or incomplete primary school
+  - Secondary school without diploma
+  - Secondary school with diploma
+  - University up to bachelor's level
+  - University (Master, Engineer, Doctor...)
+- Current Employment status: (dropdown with options) 
+  - Full-time employed
+  - Part-time employed
+  - Self-employed
+  - Unemployed
+  - Student
+  - Retired
+- RAP examination: yes/no
+- Previous application of botulinum toxin outside the Center for Extrapyramidal Diseases: yes/no
+ 

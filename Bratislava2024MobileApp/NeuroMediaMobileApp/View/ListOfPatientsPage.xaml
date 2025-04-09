@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NeuroMediaMobileApp.View.ListOfPatientsPage"
+             Title="Patients"
+             xmlns:controls="clr-namespace:NeuroMediaMobileApp.Controls">
+    <ScrollView>
+        <VerticalStackLayout>
+            <Border Margin="10"
+                    BackgroundColor="{StaticResource CardBackgroundColor}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
+
+                <Button Text="Logout"
+                        FontSize="18"
+                        Command="{Binding OnLogoutCommand}" />
+            </Border>
+
+            <Border Margin="10"
+                    BackgroundColor="{StaticResource CardBackgroundColor}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0"
+                        Text="Patients"
+                        FontSize="Medium"
+                        FontAttributes="Bold"
+                        TextColor="White"
+                        BackgroundColor="{StaticResource CardHeaderBackgroundColor}"
+                        Padding="10"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="Center"
+                        HorizontalTextAlignment="Center" />
+
+                    <CollectionView Grid.Row="1" ItemsSource="{Binding Patients}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <controls:PatientItemView />
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

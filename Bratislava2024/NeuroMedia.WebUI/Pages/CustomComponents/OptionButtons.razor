@@ -1,0 +1,10 @@
+@if (IsActive)
+{
+    <button type="button" class="details" @onclick="() => CreateEditPatientModal()">Edit</button>
+    <button type="button" class="details deactivate_btn" @onclick="() => ShowDeactivateConfirmationModal()">Deactivate</button>
+}
+else
+{
+    <button type="button" class="details" @onclick="() => ShowReactivateConfirmationModal()">Reactivate</button>
+    <button type="button" class="details deactivate_btn" @onclick="() => ShowDeleteConfirmationModal()">Delete</button>
+}

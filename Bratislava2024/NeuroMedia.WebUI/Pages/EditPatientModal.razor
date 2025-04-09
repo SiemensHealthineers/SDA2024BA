@@ -1,0 +1,166 @@
+@using Microsoft.AspNetCore.Components.Web
+@using NeuroMedia.Application.Features.Patients.Commands.UpdatePatient
+@using NeuroMedia.Application.Features.Patients.Queries.GetPatientById
+@using NeuroMedia.Domain.Entities
+@using NeuroMedia.Domain.Enums
+@using NeuroMedia.WebUI.Helpers
+@using NeuroMedia.WebUI.Models
+
+<div class="modal fade bg-opacity-50 bg-dark" id="editPatientModal" tabindex="-1" role="dialog" aria-labelledby="Edit Patient" aria-hidden="true">
+    <div class="modal-dialog modal-xxl" role="document">
+        <div class="modal-content overflow-auto">
+            <div class="modal-header">
+                <span class="modal-title" id="patientDetailModalLabel"> Edit Patient</span>
+                <button type="button" class="close-x" @onclick="() => OnClose()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @if (patient != null)
+            {
+                <div class="modal-body bg-white border-5">
+                    <EditForm Model=@patient OnValidSubmit="HandleValidSubmit">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+
+                        <div class="card shadow mb-4">
+                            <div class="card-header">Personal Information</div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="inputName">Name</label>
+                                        <InputText @bind-Value=@patient.Name class="form-control" id="inputName" placeholder="Name" />
+                                        <ValidationMessage For="@(() => patient.Name)" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="inputSurname">Surname</label>
+                                        <InputText @bind-Value=@patient.Surname class="form-control" id="inputSurname" placeholder="Surname" />
+                                        <ValidationMessage For="@(() => patient.Surname)" />
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-md-6">
+                                        <label for="inputDate">Date of Birth</label>
+                                        <InputDate @bind-Value=@patient.DateOfBirth class="form-control" id="inputDate" />
+                                        <ValidationMessage For="@(() => patient.DateOfBirth)" />
+                                        <text class="validation-message">@DateOfBirthInTheFuture</text>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="inputSex">Sex</label>
+                                        <InputSelect id="inputSex" class="form-control" @bind-Value="@patient.Sex">
+                                            <option selected disabled>Choose...</option>
+                                            @foreach (var sex in UtilityHelpers.GetEnumSelectList<Sex>())
+                                            {
+                                                <option value="@sex.Value">@sex.Text</option>
+                                            }
+                                        </InputSelect>
+                                        <ValidationMessage For="@(() => patient.Sex)" />
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-md-6">
+                                        <label for="inputEmail">Email</label>
+                                        <InputText @bind-Value="@patient.Email" type="email" class="form-control" id="inputEmail" placeholder="Email" />
+                                        <ValidationMessage For="@(() => patient.Email)" />
+                                        <text class="validation-message">@EmailNotUnique</text>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="inputPhone">Phone number</label>
+                                        <InputText @bind-Value=@patient.PhoneNumber type="phoneNumber" class="form-control" id="inputPhone" placeholder="Phone number" />
+                                        <ValidationMessage For="@(() => patient.PhoneNumber)" />
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-md-6">
+                                        <label for="inputEducation">Highest Achieved Education</label>
+                                        <InputSelect id="inputEducation" class="form-control" @bind-Value=@patient.HighestEducation TValue="EducationLevel?">
+                                            <option selected disabled value="">Choose...</option>
+                                            @foreach (var educationLevel in UtilityHelpers.GetEnumSelectList<EducationLevel>())
+                                            {
+                                                <option value="@educationLevel.Value">@educationLevel.Text</option>
+                                            }
+                                        </InputSelect>
+                                        <ValidationMessage For="@(() => patient.HighestEducation)" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="inputEmployment">Employment Status</label>
+                                        <InputSelect id="inputEmployment" class="form-control" @bind-Value=@patient.EmploymentStatus TValue="EmploymentStatus?">
+                                            <option selected disabled>Choose...</option>
+                                            @foreach (var employmentStatus in UtilityHelpers.GetEnumSelectList<EmploymentStatus>())
+                                            {
+                                                <option value="@employmentStatus.Value">@employmentStatus.Text</option>
+                                            }
+                                        </InputSelect>
+                                        <ValidationMessage For="@(() => patient.EmploymentStatus)" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card shadow mb-3">
+                            <div class="card-header">Medical Information</div>
+                            <div class="card-body">
+                                <div class="row mt-4">
+                                    <div class="col-md-12">
+                                        <label for="inputDiagnosis">Diagnosis</label>
+                                        <InputSelect id="inputDiagnosis" class="form-control" @bind-Value="@patient.Diagnosis">
+                                            <option selected disabled>Choose...</option>
+                                            @foreach (var diagnosis in UtilityHelpers.GetEnumSelectList<Diagnoses>())
+                                            {
+                                                <option value="@diagnosis.Value">@diagnosis.Text</option>
+                                            }
+                                        </InputSelect>
+                                        <ValidationMessage For="@(() => patient.Diagnosis)" />
+                                    </div>
+
+                                    <div class="col-md-12 date-input">
+                                        <label for="inputDiagDate">Date of Diagnosis</label>
+                                        <InputDate class="form-control" id="inputDiagDate" @bind-Value=@patient.DateOfDiagnosis />
+                                        <ValidationMessage For="@(() => patient.DateOfDiagnosis)" />
+                                        <text class="validation-message">@DateOfDiagnosisInTheFuture</text>
+
+                                    </div>
+
+
+                                    <div class="grid-item">
+                                        <div class="form-check">
+                                            <InputCheckbox class="form-check-input" type="checkbox" id="RAPexam" @bind-Value=patient.RapExamination />
+                                            <label class="form-check-label" for="RAPexam">
+                                                RAP Examination
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="grid-item">
+                                        <div class="form-check">
+                                            <InputCheckbox class="form-check-input" type="checkbox" id="applicationCheck" @bind-Value=patient.PreviousBotulinumToxinApplication />
+                                            <label class="form-check-label" for="applicationCheck">
+                                                Previous application of botulinum toxin outside the Center for Extrapyramidal Diseases
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer bg-white border-5 d-flex justify-content-between">
+                            <button type="button" class="btn button-footer-close" data-dismiss="modal">Close</button>
+                            <div class="d-flex ms-auto">
+                                <button type="button" class="btn btn-primary deactivate_btn me-2" @onclick="() => ShowConfirmationModal()" id="showDeactivationModal">Deactivate</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </EditForm>
+                </div>
+            }
+            else
+            {
+                <div class="modal-body bg-white border-5">
+                    <span class="d-flex fs-3 text-center align-self-center">Unable to get patient data. Please, try to contact service administrator</span>
+                    <div class="modal-footer bg-white border-5 d-flex justify-content-between">
+                        <button type="button" class="btn button-footer-close" @onclick="() => OnClose()">Close</button>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,1 @@
+Initial information about project and requirements

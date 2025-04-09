@@ -1,0 +1,94 @@
+@page "/visit/personal/{PatientId:int}/{VisitId:int}"
+@using NeuroMedia.Application.Features.Patients.Queries.GetPatientById
+@using NeuroMedia.Application.Features.VisitDetails.Queries.GetVisitDetailsById
+@using NeuroMedia.Application.Features.Visits.Queries
+@using NeuroMedia.Domain.Entities
+@using System.Text.Json
+@using NeuroMedia.WebUI.Helpers
+@using NeuroMedia.WebUI.Pages
+@using static System.Net.WebRequestMethods
+
+<PageTitle>Patient's Personal Visit</PageTitle>
+@if (errorMessage != null)
+{
+    <p>@errorMessage</p>
+
+}
+else if (Visit != null && patient != null)
+{
+    <div class="container-fluid d-flex flex-column clearfix navbar-height">
+        <div class="data-container container-fluid full-height">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card shadow mb-3">
+                        <div class="card-header">
+                            <span class="fw-bolder fs-2">
+                                @patient.Name @patient.Surname (@UtilityHelpers.CalculateYears(patient.DateOfBirth))
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <span class="data-descriptor">Visit type:</span>
+                                <span class="data-value">@Visit.VisitType</span>
+                            </div>
+                            <div class="mb-3">
+                                <span class="data-descriptor">Date of visit:</span>
+                                <span class="data-value">@Visit.DateOfVisit.ToShortDateString()</span>
+                            </div>
+                            <div class="d-block">
+                                <span class="data-descriptor">Questionnaires:</span>
+                                <div class="data-value">
+                                    <div class="d-block">
+                                        <div class="btn-container d-flex flex-column flex-sm-row flex-wrap justify-content-sm-evenly">
+                                            @foreach (var questionnaire in Visit.Questionnaires ?? [])
+                                            {
+                                                <button type="button" class="btn btn-@(string.IsNullOrEmpty(questionnaire.BlobPath) ? "secondary disabled" : "primary")" @onclick="() => ShowQuestionnaireModal(questionnaire)">@UtilityHelpers.GetDisplayName(questionnaire.QuestionnaireType)</button>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card shadow mb-3">
+                        <div class="card-header">Short note</div>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <textarea class="note_container form-control overflow-auto" id="shortNote" rows="3">@Visit.Note</textarea>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button class="btn btn-secondary disabled">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row full-height mt-3 mb-5">
+                @foreach (var item in Visit.Videos)
+                {
+                    if (!string.IsNullOrEmpty(item.BlobPath))
+                    {
+                        <div class="col-lg-4 no-border p-3 full-height">
+                            <b>@item.VideoType.ToString()</b>
+                            <video width="480" height="360" controls>
+                                <source src="http://localhost:5080/api/Videos/stream?blobPath=@Uri.EscapeDataString(item.BlobPath)&accessToken=@AccessToken&idToken=@IdToken">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <p><em>Loading...</em></p>
+
+}
+
+<QuestionnaireAnswers Questionnaire="@SelectedQuestionnaire" Answers="@CurrentAnswers" />

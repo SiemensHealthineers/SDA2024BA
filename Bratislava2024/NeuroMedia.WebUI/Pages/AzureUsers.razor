@@ -1,0 +1,35 @@
+@page "/azureusers"
+@attribute [Authorize]
+
+<PageTitle>Azure Users</PageTitle>
+
+<h1>Azure Users</h1>
+
+@if (UsersList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Institution</th>
+                <th>Roles</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var userDto in UsersList)
+            {
+                <tr>
+                    <td>@userDto.Id</td>
+                    <td>@userDto.DisplayName</td>
+                    <td>@userDto.Institution</td>
+                    <td>@userDto.Roles</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+} 

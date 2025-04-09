@@ -1,0 +1,144 @@
+.first_row {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.data_row {
+    margin-top: 50px;
+}
+
+.note_container {
+    background-color: #c6ddde;
+    height: 100px;
+    width: 100%;
+    border-radius: 2px;
+}
+
+h6 {
+    color: #5D5B5B;
+    font-weight: 500;
+}
+
+.data-descriptor {
+    color: #5D5B5B;
+    font-weight: 500;
+}
+
+.data-container {
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+}
+
+.data-value {
+    font-size: x-large;
+    font-weight: 200;
+}
+
+.note_container h6 {
+    margin: 10px;
+    color: black;
+}
+
+.visit_column p {
+    background-color: #c6ddde;
+    height: 40vh;
+    width: 100%;
+    border-radius: 2px;
+    padding-left: 5px;
+    overflow-y: auto;
+}
+
+::deep .form-control {
+    background-color: #c6ddde;
+    resize: none;
+}
+
+.modal-xxl {
+    max-width: 90%;
+    height: 90%;
+}
+
+.button-footer-close {
+    background-color: #118081;
+    transition: background-color 0.3s ease;
+    color: white;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+    border-radius: 1rem;
+}
+
+.button-footer-close:hover {
+    background-color: #9dcac9;
+}
+
+.button-footer-close:hover {
+    background-color: #9dcac9 !important;
+    border-color: #9dcac9 !important;
+}
+
+.close-x {
+    background-color: transparent;
+    border: none;
+    font-size: 40px;
+    color: #118081;
+    cursor: pointer;
+}
+
+.close-x:hover {
+    color: #9dcac9;
+}
+
+.modal-header {
+    padding-left: 50px;
+}
+
+.modal-title {
+    font-weight: 700;
+    font-size: x-large;
+    color: #118081;
+}
+
+.btn-primary {
+    background-color: #118081;
+    transition: background-color 0.3s ease;
+    color: white;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+    border-radius: 1rem;
+}
+
+.btn-primary:hover {
+    background-color: #9dcac9 !important;
+    border-color: #9dcac9 !important;
+}
+
+::deep .form-check-label {
+    margin-top: 1rem;
+}
+
+::deep .form-check-input {
+    margin-top: 1.22rem;
+}
+
+.card {
+    border-color: #c6ddde;
+}
+
+.card .card-header {
+        background-color: #118081;
+        color: white;
+        font-weight: bold;
+}
+
+.date-input {
+    margin-top: 1.5rem;
+}

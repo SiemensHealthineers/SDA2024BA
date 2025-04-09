@@ -1,0 +1,55 @@
+@using NeuroMedia.Application.Features.Questionnaires.Dtos
+@using NeuroMedia.WebUI.Helpers
+
+@page "/questionnaire/{Path}"
+
+<div class="modal fade" id="questionnaireAnswersModal" tabindex="-1" role="dialog" aria-labelledby="questionnaireAnswersModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-l modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="questionnaireAnswersModalLabel">@Questionnaire?.QuestionnaireType?.ToString()</h5>
+                <button type="button" class="close close-x" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @if (Questionnaire == null || Answers == null)
+                {
+                    <p>Loading...</p>
+                }
+                else
+                {
+                    <div class="row">
+                        <div class="col-12">
+                            @foreach (var question in Questionnaire.Questions)
+                            {
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        @question.Text
+                                    </div>
+                                    <div class="card-body">
+                                        @{
+                                            var answer = Answers.Answers.Where(a => a.QuestionId == question.Id).FirstOrDefault();
+
+                                            if (answer != null)
+                                            {
+                                                <p class="card-text">@UtilityHelpers.GetAnswerString(question, answer)</p>
+                                            }
+                                            else
+                                            {
+                                                <p class="card-text text-muted">No answer provided</p>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn button-footer-close" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+{
+  "Patients": [
+    {
+      "Name": "Martin",
+      "Surname": "Dev",
+      "DateOfBirth": "1/1/2000 0:00:00 AM",
+      "Sex": 1,
+      "Diagnosis": 0,
+      "DateOfDiagnosis": "12/11/2007 0:00:00 AM",
+      "email": "patient@turituri866.onmicrosoft.com",
+      "PhoneNumber": "0937135105",
+      "HighestEducation": "SecondarySchoolWithoutDiploma",
+      "EmploymentStatus": "FullTimeEmployed",
+      "RapExamination": true,
+      "PreviousBotulinumToxinApplication": false,
+      "Pseudonym": "00000000-0000-0000-0000-111111111111",
+      "userId": "0578c54a-766b-4979-b05b-f84e7bc0313e",
+      "tenantId": "NEUROLOGY"
+    },
+    {
+      "Name": "Anna",
+      "Surname": "Dev",
+      "DateOfBirth": "1/1/2002 0:00:00 AM",
+      "Sex": 0,
+      "Diagnosis": 1,
+      "DateOfDiagnosis": "9/6/2008 0:00:00 AM",
+      "email": "anna.test@test.com",
+      "PhoneNumber": "092425275",
+      "HighestEducation": "UniversityUpToBachelorsLevel",
+      "EmploymentStatus": "Student",
+      "RapExamination": false,
+      "PreviousBotulinumToxinApplication": true,
+      "Pseudonym": "00000000-0000-0000-0000-111111111112",
+      "userId": "0578c54a-766b-4979-b05b-f84e7bc0313j",
+      "tenantId": "NEUROLOGY"
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NeuroMediaMobileApp.Controls.PersonalMedicalInfo">
+    <Border Margin="10"
+        BackgroundColor="{StaticResource CardBackgroundColor}">
+
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="10"/>
+        </Border.StrokeShape>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0"
+                   Text="Personal &amp; Medical Information"
+                   FontSize="Medium"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   BackgroundColor="{StaticResource CardHeaderBackgroundColor}"
+                   Padding="10"
+                   HorizontalOptions="FillAndExpand"
+                   VerticalOptions="Center"
+                   HorizontalTextAlignment="Center" />
+
+            <Grid Grid.Row="1" Padding="10">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+
+                <Label Grid.Row="0" Grid.Column="0"
+                       Text="{Binding Patient.DisplayDiagnosis, StringFormat = 'Disease Type: {0}'}"
+                       FontAttributes="Bold" 
+                       FontSize="Medium" 
+                       TextColor="{StaticResource Black}" />
+
+                <Label Grid.Row="1" Grid.Column="0" 
+                       Text="{Binding Patient.Name, StringFormat='Name: {0}'}" 
+                       FontSize="Small" 
+                       TextColor="{StaticResource Black}" />
+                <Label Grid.Row="2" Grid.Column="0" 
+                       Text="{Binding Patient.Surname, StringFormat='Surname: {0}'}" 
+                       FontSize="Small" 
+                       TextColor="{StaticResource Black}" />
+
+                <Button Grid.Row="0"
+                        Grid.Column="1"
+                        Grid.RowSpan="3"
+                        BackgroundColor="{StaticResource PrimaryButtonColor}"
+                        CornerRadius="5"
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"
+                        Command="{Binding NavigateToProfileDetailPageCommand}">
+                    <Button.ImageSource>
+                        <FontImageSource FontFamily="MaterialIcons-Regular" Glyph="&#xe873;"/>
+                    </Button.ImageSource>
+                </Button>
+                
+            </Grid>
+        </Grid>
+    </Border>
+</ContentView>

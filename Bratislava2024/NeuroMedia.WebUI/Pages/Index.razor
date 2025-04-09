@@ -1,0 +1,30 @@
+@page "/"
+@* @attribute [Authorize] *@
+
+@using NeuroMedia.Application.Features.Patients.Queries.GetPatientById
+@using NeuroMedia.Domain.Enums
+@using NeuroMedia.WebUI.Helpers
+@using NeuroMedia.Application.Features.Visits.Queries
+
+ @inject IJSRuntime JSRuntime
+
+
+<PageTitle>CerviLog</PageTitle>
+
+<div class="d-flex flex-column flex-sm-row py-3 gap-2 justify-content-sm-between justify">
+    <h1>CerviLog</h1>
+</div>
+
+
+<div class="card shadow">
+    <div class="card-body">
+        <p>
+            Cervical dystonia is manifested by contractions of the neck muscles that lead to abnormal twisting,
+            bowing, or turning the head, which are often combined with tremors or jerky movements.
+            Treatment in this case consists of intramuscular administration of botulinum toxin and long-term treatment
+            monitoring the patient's condition. The effect of botulinum toxin is best assessed with a one-month interval after application.
+
+            This application controls the patient's condition by using a recording videos and by tracking and categorizing the patient's' status.
+        </p>
+    </div>
+</div>

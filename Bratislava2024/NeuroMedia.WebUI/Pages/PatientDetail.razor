@@ -1,0 +1,157 @@
+@using Microsoft.AspNetCore.Components.Web
+@using NeuroMedia.Application.Features.Patients.Queries.GetPatientById
+@using NeuroMedia.WebUI.Helpers
+@using NeuroMedia.Domain.Enums
+@inject IJSRuntime JSRuntime
+@inject NavigationManager Navigation
+
+<div class="modal fade" id="patientDetailModal" tabindex="-1" role="dialog" aria-labelledby="patientDetailModalLabel" aria-hidden="true" onload="ChangeMediaValue" onresize="ChangeMediaValue">
+    <div class="modal-dialog modal-xxl" role="document">
+        <div class="modal-content overflow-auto">
+            <div class="modal-header">
+                <span class="modal-title" id="patientDetailModalLabel">Patient Details</span>
+                <button type="button" class="close-x" @onclick="() => OnClose()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body bg-white border-5">
+                @if (Patient == null)
+                {
+                    <p><em>Loading...</em></p>
+                }
+                else
+                {
+                    <div class="container-fluid d-flex flex-column clearfix">
+                        <div class="data-container container-fluid">
+                            <span class="data-descriptor">Name</span>
+                            <div class="d-sm-flex flex-sm-row justify-content-start align-content-center gap-3">
+                                <span class="fw-bolder fs-1">@Patient.Name @Patient.Surname (@UtilityHelpers.CalculateYears(Patient.DateOfBirth))</span>
+                                <div class="align-content-center">
+                                    <NeuroMedia.WebUI.Pages.CustomComponents.OptionButtons PatientId="@Patient.Id" IsActive="@Patient.IsActive" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card shadow mb-3">
+                            <div class="card-header">Personal Information</div>
+                            <div class="card-body">
+                                <div class="grid-container">
+                                    <div class="grid-item">
+                                        <span class="data-descriptor">Date of Birth</span>
+                                        <span class="data-value">@Patient.DateOfBirth.ToShortDateString()</span>
+                                    </div>
+                                    <div class="grid-item">
+                                        <span class="data-descriptor">Sex</span>
+                                        <span class="data-value">@Patient.Sex</span>
+                                    </div>
+                                    <div class="grid-item">
+                                        <span class="data-descriptor">Email</span>
+                                        <span class="data-value">@Patient.Email</span>
+                                    </div>
+                                    <div class="grid-item">
+                                        <span class="data-descriptor">Phone Number</span>
+                                        <span class="data-value">@Patient.PhoneNumber</span>
+                                    </div>
+                                    <div class="grid-item">
+                                        <span class="data-descriptor">Highest Education Achieved</span>
+                                        <span class="data-value">@Patient.HighestEducation.GetDisplayName()</span>
+                                    </div>
+                                    <div class="grid-item">
+                                        <span class="data-descriptor">Employment Status</span>
+                                        <span class="data-value">@Patient.EmploymentStatus.GetDisplayName()</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card shadow mb-3">
+                            <div class="card-header">Medical Information</div>
+                            <div class="card-body">
+                                <div class="grid-container">
+                                    <div class="grid-item">
+                                        <span class="data-descriptor">Diagnosis</span>
+                                        <span class="data-value fw-bolder">@UtilityHelpers.GetDisplayName(Patient.Diagnosis)</span>
+                                    </div>
+                                    <div class="grid-item">
+                                        <span class="data-descriptor">Date of diagnosis</span>
+                                        <span class="data-value">@Patient.DateOfDiagnosis.ToShortDateString()</span>
+                                    </div>
+                                    <div class="grid-item">
+                                        <span class="data-descriptor">Disease duration</span>
+                                        <span class="data-value">@UtilityHelpers.CalculateDiseaseDuration(Patient.DateOfDiagnosis)</span>
+                                    </div>
+                                    <div class="grid-item">
+                                        <span class="data-descriptor">RAP examination</span>
+                                        <span class="data-value">@(Patient.RapExamination ? "Yes" : "No")</span>
+                                    </div>
+                                    <div class="grid-item">
+                                        <span class="data-descriptor">Previous application of botulinum toxin outside the Center for Extrapyramidal Diseases</span>
+                                        <span class="data-value">@(Patient.PreviousBotulinumToxinApplication ? "Yes" : "No")</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card shadow mb-3">
+                            <span class="card-header">Visit History Table</span>
+                            <div class="card-body">
+                                <div class="table-wrapper">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Type</th>
+                                                <th>Issued by</th>
+                                                <th>Placeholder</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-center align-middle">
+                                            @if (VisitsList == null)
+                                            {
+                                                <tr class="empty-list-handler">
+                                                    <td colspan="7"><em>>No visits to show.</em></td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                @foreach (var visit in VisitsList.OrderByDescending(v => v.DateOfVisit))
+                                                {
+                                                    <tr>
+                                                        <td>@visit.DateOfVisit.ToShortDateString()</td>
+                                                        <td>@visit.VisitType</td>
+                                                        <td>Placeholder</td>
+                                                        <td>Placeholder</td>
+                                                        <td>
+                                                            <button class="details" @onclick="() => NavigateToVisitDetails(Patient.Id, visit.Id)">Details</button>
+                                                            <button class="details-disabled">Edit</button>
+                                                            <button class="details-disabled">Remove</button>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                        </tbody>
+                                        @if (Patient.IsActive)
+                                        {
+                                            <tfoot class="table-footer-green">
+                                                <tr>
+                                                    <td colspan="5" class="text-center">
+                                                        <button type="button" class="btn button-add-visit align-middle" @onclick="() => CreateNewVisitModal()">Add visit</button>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer bg-white border-5">
+                <button type="button" class="btn button-footer-close" @onclick="() => OnClose()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<AddVisitModal InputPatient="Patient" OnVisitAdded="HandleNewVisit" />

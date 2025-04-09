@@ -1,0 +1,20 @@
+<header class="d-flex flex-wrap flex-lg-row flex-column align-items-center justify-content-center justify-content-lg-between pt-3 pb-1 px-3 bg-white align-self-center border-bottom">
+    <span class="fw-bolder text-custom-gray align-self-center align-self-lg-auto text-center">
+        <AuthorizeView>
+            <NotAuthorized>Welcome!</NotAuthorized>
+            <Authorized>You are logged in as @Role</Authorized>
+        </AuthorizeView>
+    </span>
+
+    <div class="col-lg-3 text-end pb-2">
+        <AuthorizeView>
+            <NotAuthorized>
+                <button type="button" class="btn btn-outline-secondary" @onclick="BeginSignIn">Login</button>
+            </NotAuthorized>
+            <Authorized>
+                <button type="button" class="btn btn-outline-secondary" @onclick="BeginSignOut">Logout</button>
+            </Authorized>
+        </AuthorizeView>
+    </div>
+</header>
+ 

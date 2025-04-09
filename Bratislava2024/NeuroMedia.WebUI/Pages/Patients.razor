@@ -1,0 +1,103 @@
+@page "/patients"
+@attribute [Authorize]
+
+@using NeuroMedia.Application.Features.Patients.Queries.GetPatientById
+@using NeuroMedia.Domain.Enums
+@using NeuroMedia.WebUI.Helpers
+@using NeuroMedia.Application.Features.Visits.Queries
+
+ @inject IJSRuntime JSRuntime
+
+
+<PageTitle>Patients</PageTitle>
+
+<div class="d-flex flex-column flex-sm-row py-3 gap-2 justify-content-sm-between justify">
+    <h1>Patients</h1>
+    <div class="d-flex flex-column flex-lg-row align-items-end gap-2 align-items-lg-center">
+        @if (PatientsList != null)
+        {
+            <button class="showGroup-toggler" @onclick="() => GetPatientsOnToggleClick()">Show @swapGroup</button>
+        }
+        <button class="new-patient-btn" @onclick="() => CreateNewPatientModal()">New Patient</button>
+
+    </div>
+</div>
+
+@if (PatientsList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="card shadow @swapGroup">
+        <span class="card-header">
+            @GetActualPatientGroup(ActiveState) patients
+        </span>
+        <div class="card-body @swapGroup">
+            <div class="table-wrapper">
+                <table class="table table-hover @swapGroup">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Surname</th>
+                            <th>Email</th>
+                            <th>Year of Birth</th>
+                            <th>Sex</th>
+                            <th>Diagnosis</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (PatientsList.Count == 0)
+                        {
+                            <tr class="empty-list-handler">
+                                <td colspan="7"><em>Nothing to show here...</em></td>
+                            </tr>
+                        }
+                        else if (ActiveState)
+                        {
+                            @foreach (var patientDto in PatientsList.OrderBy(p => p.Surname))
+                            {
+                                <tr>
+                                    <td>@patientDto.Name</td>
+                                    <td>@patientDto.Surname</td>
+                                    <td>@patientDto.Email</td>
+                                    <td>@patientDto.DateOfBirth.Year</td>
+                                    <td>@patientDto.Sex</td>
+                                    <td>@UtilityHelpers.GetDisplayName(patientDto.Diagnosis)</td>
+                                    <td>
+                                        <button class="details" @onclick="() => ShowDetailsModal(patientDto.Id)">Details</button>
+                                        <button type="button" class="details" @onclick="() => ShowEditPatientModal(patientDto.Id)">Edit</button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            @foreach (var patientDto in PatientsList.OrderBy(p => p.Surname))
+                            {
+                                <tr>
+                                    <td>@patientDto.Name</td>
+                                    <td>@patientDto.Surname</td>
+                                    <td>@patientDto.Email</td>
+                                    <td>@patientDto.DateOfBirth.Year</td>
+                                    <td>@patientDto.Sex</td>
+                                    <td>@UtilityHelpers.GetDisplayName(patientDto.Diagnosis)</td>
+                                    <td>
+                                        <button class="details" @onclick="() => ShowDetailsModal(patientDto.Id)">Details</button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+<PatientDetail Patient="SelectedPatient" VisitsList="VisitsList" />
+<AddPatientModal OnPatientAdded="HandleNewPatient"/>
+<EditPatientModal @key="SelectedPatient?.Id" InputPatient="SelectedPatient" OnPatientEdited="HandleEditedPatient" />
+<DeactivateConfirmDialog PatientId="SelectedPatientId" OnPatientDeactivated="HandlePatientDeactivated" />
+<ReactivateConfirmDialog PatientId="SelectedPatientId" OnPatientReactivated="HandlePatientReactivated" />
+<DeleteConfirmDialog PatientId="SelectedPatientId" OnPatientDeleted="HandlePatientDeleted" />

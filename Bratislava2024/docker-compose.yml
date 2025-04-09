@@ -1,0 +1,34 @@
+version: "3.9"
+services:
+  ui:
+    build:
+      context: .
+      dockerfile: NeuroMedia.WebUI/Dockerfile.local
+      args:
+        - NPM_PAT=${NPM_PAT}
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+  backend:
+    build:
+      context: .
+      dockerfile: NeuroMedia.API/Dockerfile.local
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+      - azurite
+  postgres:
+    image: "postgres:11.18-alpine"
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: "NeMed@1234"
+    ports:
+      - 5433:5432
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite
+    restart: always
+    ports:
+      - 10003:10000
+    command: azurite-blob --blobHost 0.0.0.0 --blobPort 10000 --loose

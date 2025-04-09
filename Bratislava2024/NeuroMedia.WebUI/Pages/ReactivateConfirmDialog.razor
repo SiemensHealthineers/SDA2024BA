@@ -1,0 +1,19 @@
+<div class="modal fade bg-opacity-50 bg-dark" id="reactivateModal" tabindex="-1" role="dialog" aria-labelledby="reactivateModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title title-reactivation" id="reactivateModalTitle">Confirm Reactivation</h5>
+                <button type="button" class="closex" @onclick="() => OnCancel()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <strong>Are you sure you want to reactivate this user?</strong>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn cancel_btn" @onclick="() => OnCancel()">Cancel</button>
+                <button type="button" class="btn reactivate_btn" @onclick="() => OnReactivate()">Reactivate</button>
+            </div>
+        </div>
+    </div>
+</div>

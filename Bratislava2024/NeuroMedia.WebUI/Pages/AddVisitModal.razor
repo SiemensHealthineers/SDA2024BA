@@ -1,0 +1,86 @@
+@using Microsoft.AspNetCore.Components.Web
+@using NeuroMedia.Application.Features.Patients.Commands.UpdatePatient
+@using NeuroMedia.Application.Features.Patients.Queries.GetPatientById
+@using NeuroMedia.Domain.Entities
+@using NeuroMedia.Domain.Enums
+@using NeuroMedia.WebUI.Helpers
+@using NeuroMedia.WebUI.Models
+
+<div class="modal fade bg-opacity-50 bg-dark" id="addVisitModal" tabindex="-1" role="dialog" aria-labelledby="Add Visit" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content overflow-auto">
+            <div class="modal-header">
+                <span class="modal-title" id="addVisitModalLabel">Add Visit</span>
+                <button type="button" class="close-x" @onclick="() => OnClose()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body bg-white border-5">
+                <EditForm Model="@Visit" OnValidSubmit="HandleValidSubmit">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+
+                <div class="card shadow mb-3">
+                    <div class="card-header">Visit Information</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="inputDate">Visit date</label>
+                                <InputDate id="inputDate" class="form-control" @bind-Value="@Visit.DateOfVisit" />
+                                <ValidationMessage For="@(() => Visit.DateOfVisit)" />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputType">Visit type</label>
+                                <InputSelect id="inputType" class="form-control" @bind-Value="@Visit.VisitType" >
+                                    @foreach (var visitType in UtilityHelpers.GetEnumSelectList<VisitType>())
+                                    {
+                                        <option value="@visitType.Value">@visitType.Text</option>
+                                    }
+                                </InputSelect>
+                                <ValidationMessage For="@(() => Visit.VisitType)" />
+                            </div>
+                                <div class="row">
+                                    @if (@Visit.VisitType == VisitType.Personal)
+                                    {
+                                        <div class="col-12">
+                                            <InputCheckbox class="form-check-input" id="onlineBool" @bind-Value="@AddOnlineVisit" />
+                                            <label class="form-check-label" for="onlineBool">Add an online visit 30 days later</label>
+                                        </div>
+                                        <div class="col-12">
+                                            <InputCheckbox class="form-check-input" id="onlineBool" @bind-Value="@IsBotulotoxin" />
+                                            <label class="form-check-label" for="onlineBool">Add a botulotoxin app</label>
+                                        </div>
+                                        <div>
+                                            <InputCheckbox class="form-check-input" id="onlineBool" @bind-Value="@IsTWSTRSPatient" />
+                                            <label class="form-check-label" for="onlineBool">Add TWSTRS(patient) for the personal visit</label>
+                                        </div>
+                                        @if(AddOnlineVisit)
+                                        {
+                                            <div class="col-12">
+                                                <InputCheckbox class="form-check-input" id="onlineBool" @bind-Value="@IsTWSTRSPatientOnline" />
+                                                <label class="form-check-label" for="onlineBool">Add TWSTRS(patient) for the online visit</label>
+                                            </div>
+                                        }
+                                    }
+                                    else if(Visit.VisitType == VisitType.Online)
+                                    {
+                                        <div>
+                                            <InputCheckbox class="form-check-input" id="onlineBool" @bind-Value="@IsTWSTRSPatientOnline" />
+                                            <label class="form-check-label" for="onlineBool">Add TWSTRS(patient) for the online visit</label>
+                                        </div>
+                                    }
+
+                        </div>
+                        
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-white border-5 d-flex justify-content-between">
+                    <button type="button" class="btn button-footer-close" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>

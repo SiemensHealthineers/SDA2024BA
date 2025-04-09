@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:NeuroMediaMobileApp.ViewModel"
+             x:Class="NeuroMediaMobileApp.View.MainPage">
+
+    <StackLayout VerticalOptions="Center"
+             HorizontalOptions="Center"
+             Padding="30"
+             Spacing="20">
+        
+        <Label Text="Welcome to CerviLog!"
+               FontSize="24"
+               HorizontalOptions="CenterAndExpand"
+               HorizontalTextAlignment="Center" />
+
+        <Label x:Name="NameLabel"/>
+
+        <Button Text="Login with Microsoft"
+                FontSize="18"
+                Command="{Binding OnLoginCommand}" />
+
+    </StackLayout>
+
+</ContentPage>

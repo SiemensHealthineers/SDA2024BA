@@ -1,0 +1,4 @@
+- git http://guides.beanstalkapp.com/version-control/common-git-commands.html
+- docker - https://www.docker.com/get-started/
+- Postman - https://learning.postman.com/docs/sending-requests/requests/
+- SonarQube - https://docs.sonarsource.com/sonarqube/latest/ (overview, will be used in our pipeline)

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NeuroMediaMobileApp.Controls.PatientItemView">
+    <StackLayout Margin="10,5,10,5" Orientation="Vertical">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackLayout Grid.Column="0">
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding Name}" FontAttributes="Bold" FontSize="Medium" TextColor="{StaticResource Black}" />
+                            <Span Text=" " />
+                            <Span Text="{Binding Surname}" FontAttributes="Bold" FontSize="Medium" TextColor="{StaticResource Black}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Email: " FontAttributes="None" FontSize="Medium" TextColor="{StaticResource Black}" />
+                            <Span Text="{Binding Email}" FontAttributes="Bold" FontSize="Medium" TextColor="{StaticResource Black}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Date of Birth: " FontAttributes="None" FontSize="Medium" TextColor="{StaticResource Black}" />
+                            <Span Text="{Binding DateOfBirth, StringFormat='{0:dd.MM.yyyy}'}" FontAttributes="Bold" FontSize="Medium" TextColor="{StaticResource Black}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Sex: " FontAttributes="None" FontSize="Medium" TextColor="{StaticResource Black}" />
+                            <Span Text="{Binding Sex}" FontAttributes="Bold" FontSize="Medium" TextColor="{StaticResource Black}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Diagnosis: " FontAttributes="None" FontSize="Medium" TextColor="{StaticResource Black}" />
+                            <Span Text="{Binding DisplayDiagnosis}" FontAttributes="Bold" FontSize="Medium" TextColor="{StaticResource Black}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </StackLayout>
+            <Button Grid.Column="1"
+                    Text="Details"
+                    VerticalOptions="Center"
+                    HorizontalOptions="End"
+                    Command="{Binding BindingContext.LoadPatientDataCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
+                    CommandParameter="{Binding Id}" />
+        </Grid>
+
+        <!-- Separator Line -->
+        <BoxView HeightRequest="1"
+                 BackgroundColor="Black"
+                 HorizontalOptions="FillAndExpand"
+                 Margin="0,05"/>
+    </StackLayout>
+</ContentView>

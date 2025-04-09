@@ -1,0 +1,9 @@
+**/.vs
+**/.vscode
+**/bin
+**/obj
+**/*.*proj.user
+**/.idea
+**/*.DotSettings.user
+**/.hintrc
+app-config-connection-strings.json

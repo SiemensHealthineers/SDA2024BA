@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:NeuroMediaMobileApp.Helpers"
+             x:Class="NeuroMediaMobileApp.Controls.MedicalInformation">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <local:BooleanToYesNoConverter x:Key="BooleanToYesNoConverter" />
+        </ResourceDictionary>
+    </ContentView.Resources>
+
+    <Border Margin="10"
+            BackgroundColor="{StaticResource CardBackgroundColor}">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="10"/>
+        </Border.StrokeShape>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0"
+                   Text="Medical Information"
+                   FontSize="Medium"
+                   FontAttributes="Bold"
+                   TextColor="White"
+                   BackgroundColor="{StaticResource CardHeaderBackgroundColor}"
+                   Padding="10"
+                   HorizontalOptions="FillAndExpand"
+                   VerticalOptions="Center"
+                   HorizontalTextAlignment="Center" />
+
+            <StackLayout Grid.Row="1"
+                         Padding="10"
+                         Spacing="5">
+                <Label Text="{Binding DisplayDiagnosis}"
+                       FontAttributes="Bold"
+                       FontSize="Large" 
+                       TextColor="{StaticResource Black}"/>
+
+                <BoxView HeightRequest="1"
+                         BackgroundColor="Black"
+                         HorizontalOptions="FillAndExpand"
+                         Margin="0,10"/>
+
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Date of diagnosis: " FontAttributes="None" FontSize="Medium" TextColor="{StaticResource Black}" />
+                            <Span Text="{Binding DateOfDiagnosis, StringFormat='{0:dd.MM.yyyy}'}" FontAttributes="Bold" FontSize="Medium" TextColor="{StaticResource Black}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Disease duration: " FontAttributes="None" FontSize="Medium" TextColor="{StaticResource Black}" />
+                            <Span Text="{Binding DisplayDiseaseDuration, StringFormat='{0:dd.MM.yyyy}'}" FontAttributes="Bold" FontSize="Medium" TextColor="{StaticResource Black}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="RAP examination: " FontAttributes="None" FontSize="Medium" TextColor="{StaticResource Black}" />
+                            <Span Text="{Binding RapExamination, Converter={StaticResource BooleanToYesNoConverter}}" FontAttributes="Bold" FontSize="Medium" TextColor="{StaticResource Black}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Previous application of botulinum toxin outside the Center for Extrapyramidal Diseases: " FontAttributes="None" FontSize="Medium" TextColor="{StaticResource Black}" />
+                            <Span Text="{Binding PreviousBotulinumToxinApplication, Converter={StaticResource BooleanToYesNoConverter}}" FontAttributes="Bold" FontSize="Medium" TextColor="{StaticResource Black}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </StackLayout>
+        </Grid>
+    </Border>
+</ContentView>

@@ -1,0 +1,19 @@
+<div class="modal fade bg-opacity-50 bg-dark" id="deactivateModal" tabindex="-1" role="dialog" aria-labelledby="deactivateModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title title-deactivation" id="deactivateModalTitle">Confirm Deactivation</h5>
+                <button type="button" class="closex" @onclick="() => OnCancel()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <strong>Are you sure you want to deactivate this user?</strong>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn cancel_btn" @onclick="() => OnCancel()">Cancel</button>
+                <button type="button" class="btn deactivate_btn" @onclick="() => OnDeactivate()">Deactivate</button>
+            </div>
+        </div>
+    </div>
+</div>

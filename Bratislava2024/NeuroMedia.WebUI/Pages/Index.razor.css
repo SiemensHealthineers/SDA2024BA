@@ -1,0 +1,98 @@
+h1 {
+    font-weight: bolder;
+}
+
+button.new-patient-btn, button.showGroup-toggler {
+    background-color: #118081;
+    transition: background-color 0.3s ease;
+    color: white;
+    padding: .25rem .75rem;
+    border-radius: 1rem;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+    width: max-content;
+}
+
+button.showGroup-toggler {
+    width: 11.75rem;
+}
+
+    button.new-patient-btn:hover, button.showGroup-toggler:hover {
+        background-color: #9dcac9;
+    }
+
+.card {
+    border-color: #c6ddde;
+}
+
+.card .card-header {
+    background-color: #118081;
+    color: white;
+    font-weight: bold;
+}
+
+.table-wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    overflow-x: auto;
+    overflow-y: auto;
+    border-radius: 0.25rem;
+}
+
+.table {
+    margin: 0;
+    font-size: 1.125rem;
+    text-align: center;
+    border: .1rem solid #9dcac9;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 0.25rem;
+    overflow: hidden;
+}
+
+    .table thead {
+        background-color: #118081;
+        color: white;
+        border: .1rem solid #118081;
+    }
+
+.card .Active, .Active .table {
+    border-color: darkgray;
+}
+
+.Active .card-header, .Active thead {
+    background-color: darkgray;
+    color: white;
+    font-weight: bold;
+}
+
+.Active button {
+    background-color: darkgray;
+    transition: background-color 0.3s ease;
+    color: white;
+}
+
+.empty-list-handler {
+    width: 100%;
+}
+
+.empty-list-handler td {
+    column-span: all;
+    width: 100%;
+}
+
+tbody tr {
+    border-bottom: 1px solid #dee2e6;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.table tbody td {
+    padding: .75rem;
+    vertical-align: middle;
+}
+
+tbody tr:hover {
+    box-shadow: 0 .25rem .5rem rgba(0, 0, 0, 0.1);
+}

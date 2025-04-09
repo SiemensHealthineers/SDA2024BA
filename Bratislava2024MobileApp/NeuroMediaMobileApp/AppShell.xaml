@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="NeuroMediaMobileApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:NeuroMediaMobileApp.View"
+    Shell.FlyoutBehavior="Disabled"
+    Title="NeuroMediaMobileApp">
+
+    <ShellContent
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage" />
+
+    <ShellContent Title="Questionnaire"
+                  Route="QuestionnairePage"
+                  ContentTemplate="{DataTemplate local:QuestionnairePage}" />
+
+    <ShellContent Title="Patient Profile"
+                  Route="PatientProfilePage"
+                  ContentTemplate="{DataTemplate local:PatientProfilePage}" />
+
+    <ShellContent Title="List Of Patients"
+              Route="ListOfPatientsPage"
+              ContentTemplate="{DataTemplate local:ListOfPatientsPage}" />
+
+</Shell>

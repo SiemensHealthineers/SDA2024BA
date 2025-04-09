@@ -1,0 +1,54 @@
+#reactivateModal {
+    z-index: 1060;
+}
+
+.cancel_btn {
+    background-color: #118081;
+    transition: background-color 0.3s ease;
+    color: white;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+    border-radius: 1rem;
+}
+
+.reactivate_btn {
+    background-color: darkred;
+    transition: background-color 0.3s ease;
+    color: white;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+    border-radius: 1rem;
+}
+
+.cancel_btn:hover {
+    background-color: #9dcac9 !important;
+    border-color: #9dcac9 !important;
+}
+
+.reactivate_btn:hover {
+    background-color: #E98686 !important;
+    border-color: #9dcac9 !important;
+}
+
+.closex {
+    background-color: transparent;
+    border: none;
+    font-size: 40px;
+    color: #118081;
+    cursor: pointer;
+}
+
+.closex:hover {
+    color: #9dcac9;
+}
+
+.title-reactivation {
+    color: #118081;
+    font-weight: 700;
+}

@@ -1,0 +1,67 @@
+# ASP.NET Core (.NET Framework)
+# Build and test ASP.NET Core projects targeting the full .NET Framework.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  sqURL_S: https://sonarqube-pilot.healthcare.siemens.com
+  sqProject: DXPOC-SDA-Bratislava-2024
+  sqToken: $[variables.SONARQUBE_TOKEN]
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: SonarQubePrepare@6
+  displayName: SonarQubePrepare
+  inputs:
+    scannerMode: 'MSBuild'
+    # jdkversion: 'JAVA_HOME'
+    SonarQube: 'SonarQube_Pilot'
+    ProjectKey: 'DXPOC-SDA-Bratislava-2024'
+    ProjectName: 'DXPOC-SDA-Bratislava-2024'
+    Sources: .
+    extraProperties: |
+     # Additional properties that will be passed to the scanner, 
+     # Put one key=value per line, example:
+     sonar.exclusions=**/bin/**/*, **/obj/**/*, **/*.g.cs, **/*.cshtml, **/*.config, **/*.log,**/test/**, *.pyc, *.pyo
+     if [ "$(Build.Reason)" == "PullRequest" ]; then
+        echo "sonar.analysis.mode=publish"
+        echo "sonar.pullrequest.key=$(System.PullRequest.PullRequestId)"
+        echo "sonar.pullrequest.branch=$(System.PullRequest.SourceBranchName)"
+        echo "sonar.pullrequest.base=$(System.PullRequest.TargetBranchName)"
+        echo "sonar.pullrequest.provider=azuredevops"
+     fi
+
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: VSTest@2
+  inputs:
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+# Run Code Analysis
+- task: SonarQubeAnalyze@6
+  displayName: 'Run Code Analysis'
+  condition: succeededOrFailed()
+  inputs:
+    pollingTimeoutSec: '300'     
+  continueOnError: true 
+

@@ -1,0 +1,28 @@
+{
+  "Visits": [
+    {
+      "Type": "1",
+      "DateOfVisit": "1/1/2002 0:00:00 AM",
+      "Note": "Everything OK",
+      "PatientId": "1",
+      "CreatedBy": "0578c54a-766b-4979-b05b-f84e7bc0313e",
+      "UpdatedBy": "0578c54a-766b-4979-b05b-f84e7bc0313e"
+    },
+    {
+      "Type": "0",
+      "DateOfVisit": "1/1/2008 9:00:00 AM",
+      "Note": "Nothing OK",
+      "PatientId": "1",
+      "CreatedBy": "0578c54a-766b-4979-b05b-f84e7bc0313e",
+      "UpdatedBy": "0578c54a-766b-4979-b05b-f84e7bc0313e"
+    },
+    {
+      "Type": "0",
+      "DateOfVisit": "1/1/2010 9:00:00 AM",
+      "Note": "Good condition",
+      "PatientId": "2",
+      "CreatedBy": "0578c54a-766b-4979-b05b-f84e7bc0313e",
+      "UpdatedBy": "0578c54a-766b-4979-b05b-f84e7bc0313e"
+    }
+  ]
+}

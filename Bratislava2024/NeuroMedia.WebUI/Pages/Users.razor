@@ -1,0 +1,41 @@
+@page "/users"
+@attribute [Authorize]
+
+<PageTitle>Users</PageTitle>
+
+<h1>Users</h1>
+
+@if (UsersList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Oid</th>
+                <th>TenantId</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Email</th>
+                <th>Institution</th>
+                <th>Roles</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var userDto in UsersList)
+            {
+                <tr>
+                    <td>@userDto.UserOid</td>
+                    <td>@userDto.TenantId</td>
+                    <td>@userDto.Name</td>
+                    <td>@userDto.Surname</td>
+                    <td>@userDto.Email</td>
+                    <td>@userDto.Institution</td>
+                    <td>@userDto.Roles</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+} 
